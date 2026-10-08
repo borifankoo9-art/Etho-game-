@@ -1,65 +1,100 @@
 <!doctype html>
 <html lang="om">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Etho Game - Dunk, Racing fi Shooting">
-<title>Etho Game — Play • Enjoy</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Etho Game</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#020817;color:#fff;font-family:Arial,sans-serif}
-header{background:#03142c;border-bottom:1px solid #1d3557;padding:12px 5%;display:flex;align-items:center;gap:25px;position:sticky;top:0;z-index:5}
-.logo{font-size:30px;font-weight:900}.logo span{color:#ffd000}.tag{color:#dbeafe;font-size:13px}
-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}nav button,.play{border:0;border-radius:12px;padding:11px 18px;background:#0b3d80;color:#fff;font-weight:700;cursor:pointer}
-.hero{padding:42px 5%;background:radial-gradient(circle at 50% 0,#124f91,#03142c 65%);text-align:center}
-.hero h1{font-size:clamp(35px,7vw,72px);margin:0}.hero h1 span{color:#ffc400}.hero p{font-size:20px;color:#dbeafe}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:30px 5%;max-width:1400px;margin:auto}
-.game{background:#071326;border:3px solid #1596ff;border-radius:24px;overflow:hidden;box-shadow:0 15px 35px #0008}.game.dunk{border-color:#ffc400}.game.shoot{border-color:#ff294d}
-.visual{height:240px;display:flex;align-items:center;justify-content:center;font-size:90px;background:linear-gradient(135deg,#168df0,#04254a)}
-.dunk .visual{background:linear-gradient(135deg,#1c8cff,#ffb000)}.shoot .visual{background:linear-gradient(135deg,#6d3c1b,#101010)}
-.content{padding:20px}.content h2{font-size:28px;margin:0 0 8px}.content p{color:#cfe5ff;min-height:45px}.play{width:100%;font-size:18px;background:#ffc400;color:#071326}.racing .play{background:#079cff;color:white}.shoot .play{background:#ff294d;color:white}
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:10px 5% 30px;max-width:1400px;margin:auto}.info div{background:#071326;border-radius:18px;padding:18px;text-align:center;border:1px solid #19385e}
-.ad{margin:0 5% 30px;border:1px dashed #58708f;border-radius:16px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#9db6d3}
-.page{display:none;max-width:900px;margin:auto;padding:35px 5%}.page.active{display:block}.page p{color:#cfe5ff;line-height:1.7}
-.gameScreen{display:none;text-align:center;padding:25px}.gameScreen.active{display:block}.back{margin:10px;padding:10px 18px;border-radius:10px;border:0}
-#dunkTarget{font-size:90px;background:none;border:0;cursor:pointer}#raceArea{height:420px;background:#183047;position:relative;overflow:hidden;border-radius:20px}.car{position:absolute;bottom:20px;left:45%;font-size:55px}.target{font-size:70px;background:none;border:0;cursor:pointer}
-footer{text-align:center;border-top:1px solid #1d3557;padding:25px;color:#8fa9c5}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.info{grid-template-columns:1fr}.tag{display:none}header{gap:8px}.logo{font-size:23px}}
+header{padding:12px 5%;background:#03142c;display:flex;align-items:center;border-bottom:1px solid #24466f;position:sticky;top:0;z-index:10}
+.logo{font-size:28px;font-weight:900}.logo b{color:#ffc400}nav{margin-left:auto;display:flex;gap:7px}button{cursor:pointer;border:0;border-radius:12px;padding:11px 16px;font-weight:bold}
+nav button{background:#0b3d80;color:#fff}.hero{text-align:center;padding:35px 15px;background:radial-gradient(circle,#12538f,#020817 70%)}.hero h1{font-size:clamp(38px,8vw,70px);margin:0}.hero span{color:#ffc400}
+.grid{max-width:1250px;margin:auto;padding:25px 5%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#071326;border:3px solid #1b9cff;border-radius:22px;overflow:hidden}.card.d{border-color:#ffc400}.card.s{border-color:#ff3152}.pic{height:210px;display:flex;align-items:center;justify-content:center;font-size:100px;background:linear-gradient(135deg,#168df0,#07325e)}.d .pic{background:linear-gradient(135deg,#168df0,#f5a900)}.s .pic{background:linear-gradient(135deg,#75431e,#111)}
+.body{padding:18px}.body h2{font-size:28px;margin:0 0 8px}.body p{color:#cde4ff;min-height:45px}.go{width:100%;background:#ffc400}.r .go{background:#079cff;color:white}.s .go{background:#ff3152;color:white}
+.screen{display:none;max-width:1000px;margin:auto;padding:18px}.screen.active{display:block}.back{background:#fff;color:#071326}.score{font-size:22px;text-align:center}.gamebox{position:relative;background:#06101f;border:2px solid #335b86;border-radius:20px;overflow:hidden}
+canvas{display:block;width:100%;height:auto;background:#06101f;touch-action:none}
+.controls{display:flex;justify-content:center;gap:12px;margin:12px}.controls button{font-size:25px;min-width:75px;background:#123d69;color:#fff}
+.note{text-align:center;color:#b9d4ef}.ad{margin:20px 5%;min-height:90px;border:1px dashed #607995;display:flex;align-items:center;justify-content:center;color:#9fb7cf;border-radius:15px}
+footer{text-align:center;padding:25px;color:#8ba7c5;border-top:1px solid #1d3557}
+@media(max-width:850px){.grid{grid-template-columns:1fr}nav button{padding:9px}.logo{font-size:22px}}
 </style>
 </head>
 <body>
-<header><div class="logo">🎮 Etho <span>Game</span><div class="tag">Play • Enjoy</div></div>
-<nav><button onclick="home()">⌂ Home</button><button onclick="show('about')">ⓘ About</button><button onclick="show('contact')">✉ Contact</button></nav></header>
-
-<div id="homePage">
-<section class="hero"><h1>Choose Your <span>Game</span></h1><p>Play amazing games, improve your skills and get higher scores!</p></section>
+<header><div class="logo">🎮 Etho <b>Game</b></div><nav><button onclick="home()">Home</button><button onclick="home()">Games</button><button onclick="showAccount()">👤 Account</button><button onclick="showWithdraw()">💸 Withdraw</button></nav></header>
+<div id="home">
+<section class="hero"><h1>Choose Your <span>Game</span></h1><p>Dhugumaan taphadhu — score kee fooyyeessi!</p></section>
 <section class="grid">
-<article class="game dunk"><div class="visual">🏀</div><div class="content"><h2>Etho Dunk</h2><p>Darbi kubbaa gara basketitti! Points argadhu, level olkaasi.</p><button class="play" onclick="startDunk()">▶ Play Now</button></div></article>
-<article class="game racing"><div class="visual">🏎️</div><div class="content"><h2>Etho Racing</h2><p>Konkolaataa oofi, konkolaateewwan dorgomsiisi!</p><button class="play" onclick="startRace()">▶ Play Now</button></div></article>
-<article class="game shoot"><div class="visual">🎯</div><div class="content"><h2>Etho Shooting</h2><p>Target rukutuu, score guddaa argadhu!</p><button class="play" onclick="startShoot()">▶ Play Now</button></div></article>
+<article class="card d"><div class="pic">🏀</div><div class="body"><h2>Etho Dunk</h2><p>Kubbaa gara basketitti darbii, score argadhu.</p><button class="go" onclick="openGame('dunk')">▶ PLAY NOW</button></div></article>
+<article class="card r"><div class="pic">🏎️</div><div class="body"><h2>Etho Racing</h2><p>Konkolaataa oofi; konkolaataa biroo irraa of eegi.</p><button class="go" onclick="openGame('race')">▶ PLAY NOW</button></div></article>
+<article class="card s"><div class="pic">🎯</div><div class="body"><h2>Etho Shooting</h2><p>Target socho'u rukuti; yeroo xumuruun dura score guddaa argadhu.</p><button class="go" onclick="openGame('shoot')">▶ PLAY NOW</button></div></article>
 </section>
-<section class="info"><div>⚡<b> Fast & Smooth</b><br>Play without delay</div><div>🏆<b> High Score</b><br>Beat your record</div><div>📱<b> Mobile Friendly</b><br>Play on your phone</div></section>
-<div class="ad">ADVERTISEMENT — AdSense can be placed here after approval.</div>
+<div class="ad">ADVERTISEMENT — AdSense booda asitti galuu danda'a.</div>
 </div>
 
-<section id="about" class="page"><h1>About Etho Game</h1><p>Etho Game is a simple entertainment portal containing Dunk, Racing and Shooting mini-games.</p><button onclick="home()">← Back</button></section>
-<section id="contact" class="page"><h1>Contact</h1><p>Before publishing, replace this text with your real contact email.</p><button onclick="home()">← Back</button></section>
+<section id="dunk" class="screen"><button class="back" onclick="home()">← Home</button><h1>🏀 Etho Dunk</h1><div class="score">Score: <b id="ds">0</b> | Shots: <b id="shots">0</b></div><div class="gamebox"><canvas id="dc" width="800" height="520"></canvas></div><div class="controls"><button id="dleft">◀</button><button id="dshoot">🏀 SHOOT</button><button id="dright">▶</button></div><p class="note">Kubbaa qindeessi; SHOOT tuqi. Basket keessa yoo seene +10!</p></section>
 
-<section id="dunkGame" class="gameScreen"><h1>🏀 Etho Dunk</h1><p>Basket tuqi! <b id="dScore">0</b></p><button id="dunkTarget" onclick="dunk()">🏀</button><p>+10 points</p><button class="back" onclick="home()">← Home</button></section>
-<section id="raceGame" class="gameScreen"><h1>🏎️ Etho Racing</h1><p>⬅️ ➡️ tuqiitii konkolaataa sochoosi.</p><div id="raceArea"><div class="car" id="car">🏎️</div></div><p>Score: <b id="rScore">0</b></p><button class="back" onclick="home()">← Home</button></section>
-<section id="shootGame" class="gameScreen"><h1>🎯 Etho Shooting</h1><p>Target rukuti! Score: <b id="sScore">0</b></p><button class="target" id="target" onclick="shoot()">🎯</button><p>+10 points</p><button class="back" onclick="home()">← Home</button></section>
+<section id="race" class="screen"><button class="back" onclick="home()">← Home</button><h1>🏎️ Etho Racing</h1><div class="score">Score: <b id="rs">0</b> | Distance: <b id="dist">0</b></div><div class="gamebox"><canvas id="rc" width="800" height="520"></canvas></div><div class="controls"><button id="rleft">◀</button><button id="rright">▶</button></div><p class="note">Konkolaataa kee bitaa/mirgaa sochoosi; konkolaataa diimaa hin tuqin.</p></section>
 
-<footer>© 2026 Etho Game • Privacy Policy • Terms</footer>
+<section id="shoot" class="screen"><button class="back" onclick="home()">← Home</button><h1>🎯 Etho Shooting</h1><div class="score">Score: <b id="ss">0</b> | Time: <b id="timer">30</b>s</div><div class="gamebox"><canvas id="sc" width="800" height="520"></canvas></div><p class="note">Target diimaa tuqi/rukuti. Sekondii 30 keessatti score guddaa argadhu!</p></section>
+
+<section id="account" class="screen">
+<button class="back" onclick="home()">← Home</button>
+<h1>👤 Etho Account</h1>
+<div class="gamebox" style="padding:20px">
+  <p><b>Username</b></p>
+  <input id="username" type="text" placeholder="Maqaa fayyadamaa" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
+  <p><b>Password</b></p>
+  <input id="password" type="password" placeholder="Password" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
+  <button onclick="createAccount()" style="background:#ffc400">Create Account</button>
+  <p id="accountMsg" class="note"></p>
+</div>
+</section>
+
+<section id="withdraw" class="screen">
+<button class="back" onclick="home()">← Home</button>
+<h1>💸 Withdraw</h1>
+<div class="gamebox" style="padding:20px">
+  <p class="score">Minimum withdrawal: <b>50 Birr</b></p>
+  <p>Your game balance: <b id="withdrawBalance">0</b> points</p>
+  <p>Telebirr number</p>
+  <input id="telebirr" type="tel" inputmode="numeric" maxlength="10" placeholder="Lakkoofsa Telebirr" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
+  <button onclick="requestWithdraw()" style="background:#35d07f">Request 50 Birr</button>
+  <p id="withdrawMsg" class="note"></p>
+  <p class="note">Kun yeroo ammaa request qofa; kaffaltiin Telebirr ofumaan hin ergamu. Backend fi payment API seera qabeessa booda itti dabalama.</p>
+</div>
+</section>
+<footer>© 2026 Etho Game</footer>
+
 <script>
-let d=0,r=0,s=0,carX=45;
-function hideAll(){document.querySelectorAll('.page,.gameScreen').forEach(x=>x.classList.remove('active'));document.getElementById('homePage').style.display='none'}
-function home(){hideAll();document.getElementById('homePage').style.display='block'}
-function show(id){hideAll();document.getElementById(id).classList.add('active')}
-function startDunk(){hideAll();document.getElementById('dunkGame').classList.add('active')}
-function startRace(){hideAll();document.getElementById('raceGame').classList.add('active')}
-function startShoot(){hideAll();document.getElementById('shootGame').classList.add('active')}
-function dunk(){d+=10;document.getElementById('dScore').textContent=d}
-function shoot(){s+=10;document.getElementById('sScore').textContent=s;let t=document.getElementById('target');t.style.transform='translate('+((Math.random()*180)-90)+'px,'+((Math.random()*120)-60)+'px)'}
-document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')carX=Math.max(5,carX-5);if(e.key==='ArrowRight')carX=Math.min(88,carX+5);document.getElementById('car').style.left=carX+'%'});
-document.getElementById('raceArea').addEventListener('click',()=>{r+=10;document.getElementById('rScore').textContent=r});
+const homeEl=document.getElementById('home'); let active=null, raf=0;
+function home(){cancelAnimationFrame(raf);document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));homeEl.style.display='block';active=null}
+function openGame(id){homeEl.style.display='none';document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');active=id;if(id==='dunk')dunkStart();if(id==='race')raceStart();if(id==='shoot')shootStart()}
+
+/* DUNK: simple basketball physics */
+const dc=document.getElementById('dc'),dx=dc.getContext('2d');let bx=400,by=420,bvx=0,bvy=0,angle=0,dScore=0,shots=0,aim=0,shooting=false;
+function dunkStart(){dScore=0;shots=0;shooting=false;bx=400;by=420;aim=0;document.getElementById('ds').textContent=0;document.getElementById('shots').textContent=0;dunkLoop()}
+function dunkLoop(){if(active!=='dunk')return;dx.clearRect(0,0,800,520);dx.fillStyle='#0b2948';dx.fillRect(0,0,800,520);dx.fillStyle='#174a77';dx.fillRect(0,440,800,80);
+dx.strokeStyle='#fff';dx.lineWidth=5;dx.strokeRect(610,145,105,70);dx.fillStyle='#ff6b00';dx.beginPath();dx.arc(662,220,28,0,Math.PI*2);dx.stroke();
+dx.fillStyle='#ffc400';dx.font='22px Arial';dx.fillText('AIM: '+(aim<0?'LEFT':aim>0?'RIGHT':'CENTER'),20,35);
+if(!shooting){bx=400+aim*90;by=400;dx.fillStyle='#ff8c00';dx.beginPath();dx.arc(bx,by,25,0,7);dx.fill()}else{bvx+=0.06;bvy+=0.25;bx+=bvx;by+=bvy;if(bx>635&&bx<690&&by>180&&by<250){dScore+=10;document.getElementById('ds').textContent=dScore;shooting=false;bx=400;by=400;aim=0}if(by>500||bx>850){shooting=false;bx=400;by=400;aim=0}}
+if(shooting){dx.fillStyle='#ff8c00';dx.beginPath();dx.arc(bx,by,25,0,7);dx.fill()}raf=requestAnimationFrame(dunkLoop)}
+function doDunk(){if(!shooting){shots++;document.getElementById('shots').textContent=shots;shooting=true;bvx=(aim+1)*3;bvy=-10}}
+document.getElementById('dshoot').onclick=doDunk;document.getElementById('dleft').onclick=()=>aim=Math.max(-1,aim-.5);document.getElementById('dright').onclick=()=>aim=Math.min(1,aim+.5);
+
+/* RACING: obstacle avoidance */
+const rc=document.getElementById('rc'),rx=rc.getContext('2d');let carX=380,obs=[],rScore=0,dist=0,running=false;
+function raceStart(){carX=380;obs=[];rScore=0;dist=0;running=true;document.getElementById('rs').textContent=0;raceLoop()}
+function raceLoop(){if(active!=='race')return;rx.fillStyle='#17451f';rx.fillRect(0,0,800,520);rx.fillStyle='#333';rx.fillRect(170,0,460,520);rx.fillStyle='#fff';for(let y=-20;y<520;y+=80){rx.fillRect(395,y,10,45)}
+if(Math.random()<.025)obs.push({x:190+Math.random()*420,y:-70,s:45});for(let o of obs)o.y+=6;
+obs=obs.filter(o=>o.y<560);rx.font='50px Arial';rx.fillText('🏎️',carX,450);for(let o of obs){rx.fillText('🚗',o.x,o.y);if(o.y>390&&o.y<470&&Math.abs(o.x-carX)<55){running=false;alert('Game Over! Score: '+rScore);home();return}}
+dist++;if(dist%10===0){rScore++;document.getElementById('rs').textContent=rScore}document.getElementById('dist').textContent=dist;raf=requestAnimationFrame(raceLoop)}
+function moveCar(v){carX=Math.max(180,Math.min(570,carX+v))}
+document.getElementById('rleft').onclick=()=>moveCar(-55);document.getElementById('rright').onclick=()=>moveCar(55);
+
+/* SHOOTING: timed moving target */
+const sc=document.getElementById('sc'),sx=sc.getContext('2d');let target={x:400,y:250,r:38,vx:4,vy:2},sScore=0,time=30,shootTimer=null;
+function shootStart(){sScore=0;time=30;target={x:400,y:250,r:38,vx:4,vy:2};document.getElementById('ss').textContent=0;document.getElementById('timer').textContent=30;clearInterval(shootTimer);shootTimer=setInterval(()=>{time--;document.getElementById('timer').textContent=time;if(time<=0){clearInterval(shootTimer);alert('Time up! Score: '+sScore);home()}},1000);shootLoop()}
+function shootLoop(){if(active!=='shoot')return;sx.fillStyle='#70451f';sx.fillRect(0,0,800,520);sx.fillStyle='#17351b';for(let x=0;x<800;x+=90)sx.fillRect(x,400,55,120);target.x+=target.vx;target.y+=target.vy;if(target.x<target.r||target.x>800-target.r)target.vx*=-1;if(target.y<target.r||target.y>390)target.vy*=-1;
+sx.fillStyle='#111';sx.beginPath();sx.arc(target.x,target.y,target.r+8,0,7);sx.fill();sx.fillStyle='#e22';sx.beginPath();sx.arc(target.x,target.y,target.r,0,7);sx.fill();sx.fillStyle='#fff';sx.beginPath();sx.arc(target.x,target.y,18,0,7);sx.fill();sx.fillStyle='#111';sx.beginPath();sx.arc(target.x,target.y,7,0,7);sx.fill();sx.strokeStyle='#fff';sx.lineWidth=3;sx.beginPath();sx.moveTo(target.x-55,target.y);sx.lineTo(target.x+55,target.y);sx.moveTo(target.x,target.y-55);sx.lineTo(target.x,target.y+55);sx.stroke();raf=requestAnimationFrame(shootLoop)}
+sc.addEventListener('pointerdown',e=>{if(active!=='shoot')return;let r=sc.getBoundingClientRect(),x=(e.clientX-r.left)*800/r.width,y=(e.clientY-r.top)*520/r.height;if(Math.hypot(x-target.x,y-target.y)<target.r){sScore+=10;document.getElementById('ss').textContent=sScore;target.x=60+Math.random()*680;target.y=60+Math.random()*300;target.vx=(Math.random()<.5?-1:1)*(3+Math.random()*4);target.vy=(Math.random()<.5?-1:1)*(1+Math.random()*3)}})
 </script>
 </body></html>
