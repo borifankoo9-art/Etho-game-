@@ -3,71 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Etho Game</title>
+<meta name="description" content="Etho Game - Dunk, Racing fi Shooting">
+<title>Etho Game — Play • Enjoy</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#071b33,#0b5d4b);color:#fff;min-height:100vh}
-header{padding:24px 18px;text-align:center}h1{margin:0;font-size:38px}header p{opacity:.85}
-.card{max-width:430px;margin:0 auto 18px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,.25)}
-.balance{text-align:center}.points{font-size:46px;font-weight:800;margin:8px 0}
-button{width:100%;padding:15px;border:0;border-radius:14px;margin-top:10px;font-size:17px;font-weight:700;cursor:pointer;background:#fff;color:#073b35}
-button:active{transform:scale(.98)}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.nav button{font-size:14px;padding:12px}
-.hidden{display:none}.small{font-size:13px;opacity:.75}.reward{padding:12px;border-radius:14px;background:rgba(0,0,0,.18);margin-top:10px}
-footer{text-align:center;padding:20px;font-size:12px;opacity:.6}
+*{box-sizing:border-box}body{margin:0;background:#020817;color:#fff;font-family:Arial,sans-serif}
+header{background:#03142c;border-bottom:1px solid #1d3557;padding:12px 5%;display:flex;align-items:center;gap:25px;position:sticky;top:0;z-index:5}
+.logo{font-size:30px;font-weight:900}.logo span{color:#ffd000}.tag{color:#dbeafe;font-size:13px}
+nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}nav button,.play{border:0;border-radius:12px;padding:11px 18px;background:#0b3d80;color:#fff;font-weight:700;cursor:pointer}
+.hero{padding:42px 5%;background:radial-gradient(circle at 50% 0,#124f91,#03142c 65%);text-align:center}
+.hero h1{font-size:clamp(35px,7vw,72px);margin:0}.hero h1 span{color:#ffc400}.hero p{font-size:20px;color:#dbeafe}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:30px 5%;max-width:1400px;margin:auto}
+.game{background:#071326;border:3px solid #1596ff;border-radius:24px;overflow:hidden;box-shadow:0 15px 35px #0008}.game.dunk{border-color:#ffc400}.game.shoot{border-color:#ff294d}
+.visual{height:240px;display:flex;align-items:center;justify-content:center;font-size:90px;background:linear-gradient(135deg,#168df0,#04254a)}
+.dunk .visual{background:linear-gradient(135deg,#1c8cff,#ffb000)}.shoot .visual{background:linear-gradient(135deg,#6d3c1b,#101010)}
+.content{padding:20px}.content h2{font-size:28px;margin:0 0 8px}.content p{color:#cfe5ff;min-height:45px}.play{width:100%;font-size:18px;background:#ffc400;color:#071326}.racing .play{background:#079cff;color:white}.shoot .play{background:#ff294d;color:white}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:10px 5% 30px;max-width:1400px;margin:auto}.info div{background:#071326;border-radius:18px;padding:18px;text-align:center;border:1px solid #19385e}
+.ad{margin:0 5% 30px;border:1px dashed #58708f;border-radius:16px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#9db6d3}
+.page{display:none;max-width:900px;margin:auto;padding:35px 5%}.page.active{display:block}.page p{color:#cfe5ff;line-height:1.7}
+.gameScreen{display:none;text-align:center;padding:25px}.gameScreen.active{display:block}.back{margin:10px;padding:10px 18px;border-radius:10px;border:0}
+#dunkTarget{font-size:90px;background:none;border:0;cursor:pointer}#raceArea{height:420px;background:#183047;position:relative;overflow:hidden;border-radius:20px}.car{position:absolute;bottom:20px;left:45%;font-size:55px}.target{font-size:70px;background:none;border:0;cursor:pointer}
+footer{text-align:center;border-top:1px solid #1d3557;padding:25px;color:#8fa9c5}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.info{grid-template-columns:1fr}.tag{display:none}header{gap:8px}.logo{font-size:23px}}
 </style>
 </head>
 <body>
-<header><h1>🎮 Etho Game</h1><p>Taphadhu • Point argadhu • Bashannani</p></header>
+<header><div class="logo">🎮 Etho <span>Game</span><div class="tag">Play • Enjoy</div></div>
+<nav><button onclick="home()">⌂ Home</button><button onclick="show('about')">ⓘ About</button><button onclick="show('contact')">✉ Contact</button></nav></header>
 
-<main>
-<section class="card balance">
-  <div>Qabxii kee</div>
-  <div class="points" id="points">0</div>
-  <div class="small">Demo points — maallaqa dhugaa miti</div>
-  <button onclick="play()">🎯 PLAY GAME (+10)</button>
+<div id="homePage">
+<section class="hero"><h1>Choose Your <span>Game</span></h1><p>Play amazing games, improve your skills and get higher scores!</p></section>
+<section class="grid">
+<article class="game dunk"><div class="visual">🏀</div><div class="content"><h2>Etho Dunk</h2><p>Darbi kubbaa gara basketitti! Points argadhu, level olkaasi.</p><button class="play" onclick="startDunk()">▶ Play Now</button></div></article>
+<article class="game racing"><div class="visual">🏎️</div><div class="content"><h2>Etho Racing</h2><p>Konkolaataa oofi, konkolaateewwan dorgomsiisi!</p><button class="play" onclick="startRace()">▶ Play Now</button></div></article>
+<article class="game shoot"><div class="visual">🎯</div><div class="content"><h2>Etho Shooting</h2><p>Target rukutuu, score guddaa argadhu!</p><button class="play" onclick="startShoot()">▶ Play Now</button></div></article>
 </section>
+<section class="info"><div>⚡<b> Fast & Smooth</b><br>Play without delay</div><div>🏆<b> High Score</b><br>Beat your record</div><div>📱<b> Mobile Friendly</b><br>Play on your phone</div></section>
+<div class="ad">ADVERTISEMENT — AdSense can be placed here after approval.</div>
+</div>
 
-<section class="card">
-  <div class="nav">
-    <button onclick="show('game')">🎮 Game</button>
-    <button onclick="show('reward')">💰 Reward</button>
-    <button onclick="show('profile')">👤 Profile</button>
-  </div>
+<section id="about" class="page"><h1>About Etho Game</h1><p>Etho Game is a simple entertainment portal containing Dunk, Racing and Shooting mini-games.</p><button onclick="home()">← Back</button></section>
+<section id="contact" class="page"><h1>Contact</h1><p>Before publishing, replace this text with your real contact email.</p><button onclick="home()">← Back</button></section>
 
-  <div id="game">
-    <h2>Mini Tap Game</h2>
-    <p>Button kana yeroo 10 tuqiitii qabxii walitti qabi.</p>
-    <button onclick="play()">TAP +10</button>
-  </div>
+<section id="dunkGame" class="gameScreen"><h1>🏀 Etho Dunk</h1><p>Basket tuqi! <b id="dScore">0</b></p><button id="dunkTarget" onclick="dunk()">🏀</button><p>+10 points</p><button class="back" onclick="home()">← Home</button></section>
+<section id="raceGame" class="gameScreen"><h1>🏎️ Etho Racing</h1><p>⬅️ ➡️ tuqiitii konkolaataa sochoosi.</p><div id="raceArea"><div class="car" id="car">🏎️</div></div><p>Score: <b id="rScore">0</b></p><button class="back" onclick="home()">← Home</button></section>
+<section id="shootGame" class="gameScreen"><h1>🎯 Etho Shooting</h1><p>Target rukuti! Score: <b id="sScore">0</b></p><button class="target" id="target" onclick="shoot()">🎯</button><p>+10 points</p><button class="back" onclick="home()">← Home</button></section>
 
-  <div id="reward" class="hidden">
-    <h2>🏆 Reward</h2>
-    <div class="reward">100 points = reward demo</div>
-    <p class="small">Kaffaltii Telebirr dhugaa argamsiisuuf backend/payment integration barbaachisa.</p>
-  </div>
-
-  <div id="profile" class="hidden">
-    <h2>👤 Profile</h2>
-    <p>Player: Guest</p>
-    <p>Points: <b id="profilePoints">0</b></p>
-  </div>
-</section>
-</main>
-
-<footer>© 2026 Etho Game</footer>
-
+<footer>© 2026 Etho Game • Privacy Policy • Terms</footer>
 <script>
-let points=Number(localStorage.getItem('ethoPoints')||0);
-function update(){
- document.getElementById('points').textContent=points;
- document.getElementById('profilePoints').textContent=points;
- localStorage.setItem('ethoPoints',points);
-}
-function play(){points+=10;update();}
-function show(id){
- ['game','reward','profile'].forEach(x=>document.getElementById(x).classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
-}
-update();
+let d=0,r=0,s=0,carX=45;
+function hideAll(){document.querySelectorAll('.page,.gameScreen').forEach(x=>x.classList.remove('active'));document.getElementById('homePage').style.display='none'}
+function home(){hideAll();document.getElementById('homePage').style.display='block'}
+function show(id){hideAll();document.getElementById(id).classList.add('active')}
+function startDunk(){hideAll();document.getElementById('dunkGame').classList.add('active')}
+function startRace(){hideAll();document.getElementById('raceGame').classList.add('active')}
+function startShoot(){hideAll();document.getElementById('shootGame').classList.add('active')}
+function dunk(){d+=10;document.getElementById('dScore').textContent=d}
+function shoot(){s+=10;document.getElementById('sScore').textContent=s;let t=document.getElementById('target');t.style.transform='translate('+((Math.random()*180)-90)+'px,'+((Math.random()*120)-60)+'px)'}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')carX=Math.max(5,carX-5);if(e.key==='ArrowRight')carX=Math.min(88,carX+5);document.getElementById('car').style.left=carX+'%'});
+document.getElementById('raceArea').addEventListener('click',()=>{r+=10;document.getElementById('rScore').textContent=r});
 </script>
-</body>
-</html>
+</body></html>
