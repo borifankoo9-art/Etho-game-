@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="om">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Etho Game</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#071b33,#0b5d4b);color:#fff;min-height:100vh}
+header{padding:24px 18px;text-align:center}h1{margin:0;font-size:38px}header p{opacity:.85}
+.card{max-width:430px;margin:0 auto 18px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,.25)}
+.balance{text-align:center}.points{font-size:46px;font-weight:800;margin:8px 0}
+button{width:100%;padding:15px;border:0;border-radius:14px;margin-top:10px;font-size:17px;font-weight:700;cursor:pointer;background:#fff;color:#073b35}
+button:active{transform:scale(.98)}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.nav button{font-size:14px;padding:12px}
+.hidden{display:none}.small{font-size:13px;opacity:.75}.reward{padding:12px;border-radius:14px;background:rgba(0,0,0,.18);margin-top:10px}
+footer{text-align:center;padding:20px;font-size:12px;opacity:.6}
+</style>
+</head>
+<body>
+<header><h1>🎮 Etho Game</h1><p>Taphadhu • Point argadhu • Bashannani</p></header>
+
+<main>
+<section class="card balance">
+  <div>Qabxii kee</div>
+  <div class="points" id="points">0</div>
+  <div class="small">Demo points — maallaqa dhugaa miti</div>
+  <button onclick="play()">🎯 PLAY GAME (+10)</button>
+</section>
+
+<section class="card">
+  <div class="nav">
+    <button onclick="show('game')">🎮 Game</button>
+    <button onclick="show('reward')">💰 Reward</button>
+    <button onclick="show('profile')">👤 Profile</button>
+  </div>
+
+  <div id="game">
+    <h2>Mini Tap Game</h2>
+    <p>Button kana yeroo 10 tuqiitii qabxii walitti qabi.</p>
+    <button onclick="play()">TAP +10</button>
+  </div>
+
+  <div id="reward" class="hidden">
+    <h2>🏆 Reward</h2>
+    <div class="reward">100 points = reward demo</div>
+    <p class="small">Kaffaltii Telebirr dhugaa argamsiisuuf backend/payment integration barbaachisa.</p>
+  </div>
+
+  <div id="profile" class="hidden">
+    <h2>👤 Profile</h2>
+    <p>Player: Guest</p>
+    <p>Points: <b id="profilePoints">0</b></p>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 Etho Game</footer>
+
+<script>
+let points=Number(localStorage.getItem('ethoPoints')||0);
+function update(){
+ document.getElementById('points').textContent=points;
+ document.getElementById('profilePoints').textContent=points;
+ localStorage.setItem('ethoPoints',points);
+}
+function play(){points+=10;update();}
+function show(id){
+ ['game','reward','profile'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+}
+update();
+</script>
+</body>
+</html>
