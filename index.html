@@ -1,100 +1,28 @@
-<!doctype html>
-<html lang="om">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Etho Game</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#070b15"><title>Etho Racing 3D</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#020817;color:#fff;font-family:Arial,sans-serif}
-header{padding:12px 5%;background:#03142c;display:flex;align-items:center;border-bottom:1px solid #24466f;position:sticky;top:0;z-index:10}
-.logo{font-size:28px;font-weight:900}.logo b{color:#ffc400}nav{margin-left:auto;display:flex;gap:7px}button{cursor:pointer;border:0;border-radius:12px;padding:11px 16px;font-weight:bold}
-nav button{background:#0b3d80;color:#fff}.hero{text-align:center;padding:35px 15px;background:radial-gradient(circle,#12538f,#020817 70%)}.hero h1{font-size:clamp(38px,8vw,70px);margin:0}.hero span{color:#ffc400}
-.grid{max-width:1250px;margin:auto;padding:25px 5%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#071326;border:3px solid #1b9cff;border-radius:22px;overflow:hidden}.card.d{border-color:#ffc400}.card.s{border-color:#ff3152}.pic{height:210px;display:flex;align-items:center;justify-content:center;font-size:100px;background:linear-gradient(135deg,#168df0,#07325e)}.d .pic{background:linear-gradient(135deg,#168df0,#f5a900)}.s .pic{background:linear-gradient(135deg,#75431e,#111)}
-.body{padding:18px}.body h2{font-size:28px;margin:0 0 8px}.body p{color:#cde4ff;min-height:45px}.go{width:100%;background:#ffc400}.r .go{background:#079cff;color:white}.s .go{background:#ff3152;color:white}
-.screen{display:none;max-width:1000px;margin:auto;padding:18px}.screen.active{display:block}.back{background:#fff;color:#071326}.score{font-size:22px;text-align:center}.gamebox{position:relative;background:#06101f;border:2px solid #335b86;border-radius:20px;overflow:hidden}
-canvas{display:block;width:100%;height:auto;background:#06101f;touch-action:none}
-.controls{display:flex;justify-content:center;gap:12px;margin:12px}.controls button{font-size:25px;min-width:75px;background:#123d69;color:#fff}
-.note{text-align:center;color:#b9d4ef}.ad{margin:20px 5%;min-height:90px;border:1px dashed #607995;display:flex;align-items:center;justify-content:center;color:#9fb7cf;border-radius:15px}
-footer{text-align:center;padding:25px;color:#8ba7c5;border-top:1px solid #1d3557}
-@media(max-width:850px){.grid{grid-template-columns:1fr}nav button{padding:9px}.logo{font-size:22px}}
-</style>
-</head>
-<body>
-<header><div class="logo">🎮 Etho <b>Game</b></div><nav><button onclick="home()">Home</button><button onclick="home()">Games</button><button onclick="showAccount()">👤 Account</button><button onclick="showWithdraw()">💸 Withdraw</button></nav></header>
-<div id="home">
-<section class="hero"><h1>Choose Your <span>Game</span></h1><p>Dhugumaan taphadhu — score kee fooyyeessi!</p></section>
-<section class="grid">
-<article class="card d"><div class="pic">🏀</div><div class="body"><h2>Etho Dunk</h2><p>Kubbaa gara basketitti darbii, score argadhu.</p><button class="go" onclick="openGame('dunk')">▶ PLAY NOW</button></div></article>
-<article class="card r"><div class="pic">🏎️</div><div class="body"><h2>Etho Racing</h2><p>Konkolaataa oofi; konkolaataa biroo irraa of eegi.</p><button class="go" onclick="openGame('race')">▶ PLAY NOW</button></div></article>
-<article class="card s"><div class="pic">🎯</div><div class="body"><h2>Etho Shooting</h2><p>Target socho'u rukuti; yeroo xumuruun dura score guddaa argadhu.</p><button class="go" onclick="openGame('shoot')">▶ PLAY NOW</button></div></article>
-</section>
-<div class="ad">ADVERTISEMENT — AdSense booda asitti galuu danda'a.</div>
-</div>
-
-<section id="dunk" class="screen"><button class="back" onclick="home()">← Home</button><h1>🏀 Etho Dunk</h1><div class="score">Score: <b id="ds">0</b> | Shots: <b id="shots">0</b></div><div class="gamebox"><canvas id="dc" width="800" height="520"></canvas></div><div class="controls"><button id="dleft">◀</button><button id="dshoot">🏀 SHOOT</button><button id="dright">▶</button></div><p class="note">Kubbaa qindeessi; SHOOT tuqi. Basket keessa yoo seene +10!</p></section>
-
-<section id="race" class="screen"><button class="back" onclick="home()">← Home</button><h1>🏎️ Etho Racing</h1><div class="score">Score: <b id="rs">0</b> | Distance: <b id="dist">0</b></div><div class="gamebox"><canvas id="rc" width="800" height="520"></canvas></div><div class="controls"><button id="rleft">◀</button><button id="rright">▶</button></div><p class="note">Konkolaataa kee bitaa/mirgaa sochoosi; konkolaataa diimaa hin tuqin.</p></section>
-
-<section id="shoot" class="screen"><button class="back" onclick="home()">← Home</button><h1>🎯 Etho Shooting</h1><div class="score">Score: <b id="ss">0</b> | Time: <b id="timer">30</b>s</div><div class="gamebox"><canvas id="sc" width="800" height="520"></canvas></div><p class="note">Target diimaa tuqi/rukuti. Sekondii 30 keessatti score guddaa argadhu!</p></section>
-
-<section id="account" class="screen">
-<button class="back" onclick="home()">← Home</button>
-<h1>👤 Etho Account</h1>
-<div class="gamebox" style="padding:20px">
-  <p><b>Username</b></p>
-  <input id="username" type="text" placeholder="Maqaa fayyadamaa" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
-  <p><b>Password</b></p>
-  <input id="password" type="password" placeholder="Password" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
-  <button onclick="createAccount()" style="background:#ffc400">Create Account</button>
-  <p id="accountMsg" class="note"></p>
-</div>
-</section>
-
-<section id="withdraw" class="screen">
-<button class="back" onclick="home()">← Home</button>
-<h1>💸 Withdraw</h1>
-<div class="gamebox" style="padding:20px">
-  <p class="score">Minimum withdrawal: <b>50 Birr</b></p>
-  <p>Your game balance: <b id="withdrawBalance">0</b> points</p>
-  <p>Telebirr number</p>
-  <input id="telebirr" type="tel" inputmode="numeric" maxlength="10" placeholder="Lakkoofsa Telebirr" style="width:100%;padding:14px;border-radius:10px;border:0;margin-bottom:12px">
-  <button onclick="requestWithdraw()" style="background:#35d07f">Request 50 Birr</button>
-  <p id="withdrawMsg" class="note"></p>
-  <p class="note">Kun yeroo ammaa request qofa; kaffaltiin Telebirr ofumaan hin ergamu. Backend fi payment API seera qabeessa booda itti dabalama.</p>
-</div>
-</section>
-<footer>© 2026 Etho Game</footer>
-
-<script>
-const homeEl=document.getElementById('home'); let active=null, raf=0;
-function home(){cancelAnimationFrame(raf);document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));homeEl.style.display='block';active=null}
-function openGame(id){homeEl.style.display='none';document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');active=id;if(id==='dunk')dunkStart();if(id==='race')raceStart();if(id==='shoot')shootStart()}
-
-/* DUNK: simple basketball physics */
-const dc=document.getElementById('dc'),dx=dc.getContext('2d');let bx=400,by=420,bvx=0,bvy=0,angle=0,dScore=0,shots=0,aim=0,shooting=false;
-function dunkStart(){dScore=0;shots=0;shooting=false;bx=400;by=420;aim=0;document.getElementById('ds').textContent=0;document.getElementById('shots').textContent=0;dunkLoop()}
-function dunkLoop(){if(active!=='dunk')return;dx.clearRect(0,0,800,520);dx.fillStyle='#0b2948';dx.fillRect(0,0,800,520);dx.fillStyle='#174a77';dx.fillRect(0,440,800,80);
-dx.strokeStyle='#fff';dx.lineWidth=5;dx.strokeRect(610,145,105,70);dx.fillStyle='#ff6b00';dx.beginPath();dx.arc(662,220,28,0,Math.PI*2);dx.stroke();
-dx.fillStyle='#ffc400';dx.font='22px Arial';dx.fillText('AIM: '+(aim<0?'LEFT':aim>0?'RIGHT':'CENTER'),20,35);
-if(!shooting){bx=400+aim*90;by=400;dx.fillStyle='#ff8c00';dx.beginPath();dx.arc(bx,by,25,0,7);dx.fill()}else{bvx+=0.06;bvy+=0.25;bx+=bvx;by+=bvy;if(bx>635&&bx<690&&by>180&&by<250){dScore+=10;document.getElementById('ds').textContent=dScore;shooting=false;bx=400;by=400;aim=0}if(by>500||bx>850){shooting=false;bx=400;by=400;aim=0}}
-if(shooting){dx.fillStyle='#ff8c00';dx.beginPath();dx.arc(bx,by,25,0,7);dx.fill()}raf=requestAnimationFrame(dunkLoop)}
-function doDunk(){if(!shooting){shots++;document.getElementById('shots').textContent=shots;shooting=true;bvx=(aim+1)*3;bvy=-10}}
-document.getElementById('dshoot').onclick=doDunk;document.getElementById('dleft').onclick=()=>aim=Math.max(-1,aim-.5);document.getElementById('dright').onclick=()=>aim=Math.min(1,aim+.5);
-
-/* RACING: obstacle avoidance */
-const rc=document.getElementById('rc'),rx=rc.getContext('2d');let carX=380,obs=[],rScore=0,dist=0,running=false;
-function raceStart(){carX=380;obs=[];rScore=0;dist=0;running=true;document.getElementById('rs').textContent=0;raceLoop()}
-function raceLoop(){if(active!=='race')return;rx.fillStyle='#17451f';rx.fillRect(0,0,800,520);rx.fillStyle='#333';rx.fillRect(170,0,460,520);rx.fillStyle='#fff';for(let y=-20;y<520;y+=80){rx.fillRect(395,y,10,45)}
-if(Math.random()<.025)obs.push({x:190+Math.random()*420,y:-70,s:45});for(let o of obs)o.y+=6;
-obs=obs.filter(o=>o.y<560);rx.font='50px Arial';rx.fillText('🏎️',carX,450);for(let o of obs){rx.fillText('🚗',o.x,o.y);if(o.y>390&&o.y<470&&Math.abs(o.x-carX)<55){running=false;alert('Game Over! Score: '+rScore);home();return}}
-dist++;if(dist%10===0){rScore++;document.getElementById('rs').textContent=rScore}document.getElementById('dist').textContent=dist;raf=requestAnimationFrame(raceLoop)}
-function moveCar(v){carX=Math.max(180,Math.min(570,carX+v))}
-document.getElementById('rleft').onclick=()=>moveCar(-55);document.getElementById('rright').onclick=()=>moveCar(55);
-
-/* SHOOTING: timed moving target */
-const sc=document.getElementById('sc'),sx=sc.getContext('2d');let target={x:400,y:250,r:38,vx:4,vy:2},sScore=0,time=30,shootTimer=null;
-function shootStart(){sScore=0;time=30;target={x:400,y:250,r:38,vx:4,vy:2};document.getElementById('ss').textContent=0;document.getElementById('timer').textContent=30;clearInterval(shootTimer);shootTimer=setInterval(()=>{time--;document.getElementById('timer').textContent=time;if(time<=0){clearInterval(shootTimer);alert('Time up! Score: '+sScore);home()}},1000);shootLoop()}
-function shootLoop(){if(active!=='shoot')return;sx.fillStyle='#70451f';sx.fillRect(0,0,800,520);sx.fillStyle='#17351b';for(let x=0;x<800;x+=90)sx.fillRect(x,400,55,120);target.x+=target.vx;target.y+=target.vy;if(target.x<target.r||target.x>800-target.r)target.vx*=-1;if(target.y<target.r||target.y>390)target.vy*=-1;
-sx.fillStyle='#111';sx.beginPath();sx.arc(target.x,target.y,target.r+8,0,7);sx.fill();sx.fillStyle='#e22';sx.beginPath();sx.arc(target.x,target.y,target.r,0,7);sx.fill();sx.fillStyle='#fff';sx.beginPath();sx.arc(target.x,target.y,18,0,7);sx.fill();sx.fillStyle='#111';sx.beginPath();sx.arc(target.x,target.y,7,0,7);sx.fill();sx.strokeStyle='#fff';sx.lineWidth=3;sx.beginPath();sx.moveTo(target.x-55,target.y);sx.lineTo(target.x+55,target.y);sx.moveTo(target.x,target.y-55);sx.lineTo(target.x,target.y+55);sx.stroke();raf=requestAnimationFrame(shootLoop)}
-sc.addEventListener('pointerdown',e=>{if(active!=='shoot')return;let r=sc.getBoundingClientRect(),x=(e.clientX-r.left)*800/r.width,y=(e.clientY-r.top)*520/r.height;if(Math.hypot(x-target.x,y-target.y)<target.r){sScore+=10;document.getElementById('ss').textContent=sScore;target.x=60+Math.random()*680;target.y=60+Math.random()*300;target.vx=(Math.random()<.5?-1:1)*(3+Math.random()*4);target.vy=(Math.random()<.5?-1:1)*(1+Math.random()*3)}})
-</script>
-</body></html>
+*{box-sizing:border-box}html,body,#game{margin:0;width:100%;height:100%;overflow:hidden;background:#070b15;color:white;font-family:system-ui;touch-action:none}canvas{display:block}.hud{position:fixed;z-index:2;top:12px;left:12px;right:12px;pointer-events:none;text-shadow:0 2px 8px #000}.brand{font-size:25px;font-weight:1000;letter-spacing:1px}.brand span{color:#2ce9ff}.stats{display:flex;gap:8px;margin-top:10px}.stat{background:#071426d9;border:1px solid #53eaff66;border-radius:12px;padding:7px 11px}.stat small{display:block;color:#aac3da;font-size:10px}.stat b{font-size:19px}#overlay{position:fixed;z-index:5;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:#03081799}.card{max-width:420px;text-align:center;background:linear-gradient(145deg,#14253bee,#050a17f5);border:1px solid #2ce9ff99;border-radius:24px;padding:27px 22px;box-shadow:0 20px 70px #0009}.card h1{font-size:42px;line-height:1;margin:10px 0;font-style:italic}.card h1 span{color:#ffc857}.card p{font-size:14px;color:#c5d7eb;line-height:1.5}.primary{width:100%;border:0;border-radius:14px;padding:15px;background:linear-gradient(90deg,#24e5ff,#a0f8ff);font-weight:900;font-size:16px;color:#00131b}.kicker{color:#2ce9ff;font-size:11px;letter-spacing:3px;font-weight:bold}.note{font-size:11px!important;color:#8fa8c5!important}.controls{position:fixed;z-index:3;bottom:18px;left:0;right:0;display:flex;justify-content:space-between;padding:0 16px;pointer-events:none}.pad{display:flex;gap:10px;pointer-events:auto}.ctrl{width:61px;height:59px;border-radius:17px;border:1px solid #65eaff99;background:#09182bdd;color:white;font-size:25px;font-weight:bold;touch-action:none}#pause{display:none;position:fixed;z-index:4;right:14px;top:126px;padding:9px 12px;border-radius:10px;background:#09182ddd;border:1px solid #ffffff66;color:white}.hint{position:fixed;z-index:2;bottom:88px;left:0;right:0;text-align:center;font-size:11px;color:#e1faffaa;pointer-events:none}
+</style></head><body><div id="game"></div><div class="hud"><div class="brand">ETHO <span>RACING</span> <small style="font-size:10px">3D</small></div><div class="stats"><div class="stat"><small>SCORE</small><b id="score">0000</b></div><div class="stat"><small>SPEED</small><b><span id="speed">0</span><small style="display:inline"> km/h</small></b></div><div class="stat"><small>BEST</small><b id="best">0000</b></div></div></div><button id="pause">Ⅱ Pause</button><div class="hint">Steer ◀ ▶ • Avoid traffic</div><div class="controls"><div class="pad"><button class="ctrl" id="left">◀</button><button class="ctrl" id="right">▶</button></div><div class="pad"><button class="ctrl" id="brake">▼</button><button class="ctrl" id="boost">▲</button></div></div>
+<div id="overlay"><div class="card"><div class="kicker">WELCOME TO THE GRID</div><h1>ETHO <span>RACING</span></h1><p>Drive a car through a 3D highway, dodge traffic, build your score, and beat your best!</p><button class="primary" id="start">START RACING ▶</button><p class="note">Android browser • Internet required to load the 3D engine</p></div></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script><script>
+(()=>{const overlay=document.getElementById('overlay');if(!window.THREE){overlay.querySelector('p').textContent='3D engine did not load. Check your internet and reload.';return}
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x8ab1cf);scene.fog=new THREE.Fog(0x8ab1cf,50,180);const camera=new THREE.PerspectiveCamera(62,innerWidth/innerHeight,.1,350);camera.position.set(0,5,10);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;document.getElementById('game').appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xd8efff,0x29364b,2));const sun=new THREE.DirectionalLight(0xfff0d5,2.5);sun.position.set(-7,15,8);sun.castShadow=true;scene.add(sun);
+const material=(c,r=.5,m=.15)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});const roadMat=material(0x252b36,.9),white=material(0xf3fbff),grass=material(0x2c684d),tire=material(0x101319,.9),glass=material(0x14283b,.2,.4);
+const road=new THREE.Mesh(new THREE.PlaneGeometry(14,260),roadMat);road.rotation.x=-Math.PI/2;road.position.z=-80;road.receiveShadow=true;scene.add(road);const field=new THREE.Mesh(new THREE.PlaneGeometry(250,300),grass);field.rotation.x=-Math.PI/2;field.position.set(0,-.08,-90);scene.add(field);
+const stripes=[];for(let z=-210;z<20;z+=10)for(let x of [-2.3,2.3]){let s=new THREE.Mesh(new THREE.BoxGeometry(.12,.03,4.5),white);s.position.set(x,.02,z);scene.add(s);stripes.push(s)}for(let x of [-7.1,7.1]){let e=new THREE.Mesh(new THREE.BoxGeometry(.2,.1,260),white);e.position.set(x,.03,-80);scene.add(e)}
+function box(g,w,h,d,mat,x,y,z){let o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);o.position.set(x,y,z);o.castShadow=true;g.add(o);return o}
+function car(color){let g=new THREE.Group(),body=material(color,.22,.55),rim=material(0xbcd7e8,.25,.7);box(g,1.55,.42,2.8,body,0,.55,0);box(g,1.13,.53,1.3,body,0,.96,-.24);box(g,1,.32,.88,glass,0,1.02,-.25);for(let x of [-.82,.82])for(let z of [-.9,.9]){let w=new THREE.Mesh(new THREE.CylinderGeometry(.28,.28,.18,14),tire);w.rotation.z=Math.PI/2;w.position.set(x,.31,z);g.add(w);let r=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,.19,12),rim);r.rotation.z=Math.PI/2;r.position.set(x,.31,z);g.add(r)}let lamp=material(0xd9fbff,.2),tail=material(0xff214b,.2);box(g,.4,.1,.05,lamp,-.45,.63,-1.43);box(g,.4,.1,.05,lamp,.45,.63,-1.43);box(g,.4,.1,.05,tail,-.45,.62,1.43);box(g,.4,.1,.05,tail,.45,.62,1.43);scene.add(g);return g}
+const player=car(0x12d8ee);player.position.set(0,0,3);const traffic=[],palette=[0xff4f70,0xffb938,0x8d75ff,0xf4f5ff,0x4ee08a];function spawn(z){let c=car(palette[Math.floor(Math.random()*palette.length)]);c.position.set([-4.3,0,4.3][Math.floor(Math.random()*3)],0,z);c.rotation.y=Math.PI;c.scale.set(.9,.9,.9);traffic.push(c)}for(let i=0;i<5;i++)spawn(-35-i*30);
+for(let side of [-1,1])for(let i=0;i<22;i++){let h=5+Math.random()*17,w=3+Math.random()*5,d=4+Math.random()*8,b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material([0x43556c,0x5a6b80,0x303f58][i%3],.8));b.position.set(side*(13+Math.random()*18),h/2,-i*14-10);scene.add(b)}
+let running=false,paused=false,score=0,speed=65,px=0,last=0,spawnTimer=0,best=Number(localStorage.getItem('ethoRacingBest')||0),keys={left:false,right:false,boost:false,brake:false};document.getElementById('best').textContent=String(best).padStart(4,'0');
+function start(){score=0;speed=65;px=0;running=true;paused=false;overlay.style.display='none';document.getElementById('pause').style.display='block';traffic.forEach((c,i)=>{c.position.set([-4.3,0,4.3][i%3],0,-35-i*31)});player.position.x=0}
+document.getElementById('start').onclick=start;document.getElementById('pause').onclick=()=>{paused=!paused;document.getElementById('pause').textContent=paused?'▶ Resume':'Ⅱ Pause'};
+function end(){running=false;document.getElementById('pause').style.display='none';if(score>best){best=Math.floor(score);localStorage.setItem('ethoRacingBest',best)}document.getElementById('best').textContent=String(best).padStart(4,'0');overlay.style.display='flex';overlay.querySelector('.kicker').textContent='RACE FINISHED';overlay.querySelector('h1').innerHTML='CRASH <span>DETECTED</span>';overlay.querySelector('p').textContent='Score '+Math.floor(score)+' • Best '+best+'. Ready for another run?';document.getElementById('start').textContent='RACE AGAIN ↻'}
+for(let [id,key] of [['left','left'],['right','right'],['boost','boost'],['brake','brake']]){let el=document.getElementById(id);el.onpointerdown=e=>{e.preventDefault();keys[key]=true};for(let ev of ['pointerup','pointercancel','pointerleave'])el.addEventListener(ev,e=>{e.preventDefault();keys[key]=false})}
+addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='a')keys.left=true;if(e.key==='ArrowRight'||e.key==='d')keys.right=true;if(e.key==='ArrowUp'||e.key==='w'||e.key===' ')keys.boost=true;if(e.key==='ArrowDown'||e.key==='s')keys.brake=true});addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='a')keys.left=false;if(e.key==='ArrowRight'||e.key==='d')keys.right=false;if(e.key==='ArrowUp'||e.key==='w'||e.key===' ')keys.boost=false;if(e.key==='ArrowDown'||e.key==='s')keys.brake=false});
+let tx=null;renderer.domElement.addEventListener('touchstart',e=>{tx=e.touches[0]?.clientX},{passive:true});renderer.domElement.addEventListener('touchmove',e=>{if(tx===null)return;let dx=e.touches[0].clientX-tx;if(Math.abs(dx)>12){keys.left=dx<0;keys.right=dx>0}},{passive:true});renderer.domElement.addEventListener('touchend',()=>{tx=null;keys.left=keys.right=false},{passive:true});
+function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5))}addEventListener('resize',resize);
+function loop(t){requestAnimationFrame(loop);let dt=Math.min((t-last)/1000||0,.04);last=t;if(running&&!paused){speed=Math.max(25,Math.min(185,speed+(keys.boost?48:keys.brake?-75:8)*dt));let move=speed/65*dt*24;score+=move;px=Math.max(-5.2,Math.min(5.2,px+((keys.right?1:0)-(keys.left?1:0))*dt*8));player.position.x+=(px-player.position.x)*.18;player.rotation.z+=((((keys.left?1:0)-(keys.right?1:0))*.1)-player.rotation.z)*.15;stripes.forEach(s=>{s.position.z+=move;if(s.position.z>12)s.position.z-=220});spawnTimer+=dt;if(spawnTimer>Math.max(.55,1.5-speed/200)){spawnTimer=0;spawn(-130)}traffic.forEach(c=>{c.position.z+=move*(.8+speed/220);if(c.position.z>12){c.position.z=-100-Math.random()*70;c.position.x=[-4.3,0,4.3][Math.floor(Math.random()*3)]}if(Math.abs(c.position.z-player.position.z)<2.1&&Math.abs(c.position.x-player.position.x)<1.45)end()});camera.position.x+=(player.position.x*.3-camera.position.x)*.05;camera.lookAt(player.position.x*.18,1,-7);document.getElementById('score').textContent=String(Math.floor(score)).padStart(4,'0');document.getElementById('speed').textContent=Math.floor(speed)}renderer.render(scene,camera)}requestAnimationFrame(loop)
+})();
+</script></body></html>
